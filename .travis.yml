@@ -1,0 +1,14 @@
+language: ruby
+node_js: "0.10"
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: build
+  on:
+    branch: master
+    condition: "-d build"
+install:
+  - git fetch origin gh-pages:gh-pages
+  - bundle install --deployment
+script: bin/travis.sh
