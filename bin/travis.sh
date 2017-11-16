@@ -21,6 +21,7 @@ else
       bin/compute.js $line
     done
   fi
+
   # Update the home file in both cases.
-  bin/compute_home.js
+  #bin/compute_home.js
 fi
