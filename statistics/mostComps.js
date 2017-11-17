@@ -11,18 +11,5 @@ module.exports = {
 		GROUP BY personId, name
 		ORDER BY comps DESC
 		LIMIT 15;
-	`,
-
-	run: function (cb) {
-		let results = query(this.query, (error, results, fields) => {
-			if (error) {throw error;}
-
-			let table = normalTable(results, fields);
-
-			let markdown = md.title(this.title) + md.description(this.description) + md.table(table);
-
-			endConnection();
-			cb(markdown);
-		});
-	}
+	`
 };

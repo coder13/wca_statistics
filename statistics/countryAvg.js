@@ -49,6 +49,5 @@ module.exports = {
 			endConnection();
 			cb(md.title(this.title) + md.description(this.description) + markdown);
 		});
-
 	}
 };

@@ -15,7 +15,7 @@ paths.forEach(path => {
 		console.log('Processing', statPath);
 		const statistic = require(Path.resolve(statPath));
 
-		statistic.run(function (output, options) {
+		(statistic.run || Statistic(statistic)).call(statistic, function (output, options) {
 			if (output === null) {
 				console.error('Output is null');
 			} else {
