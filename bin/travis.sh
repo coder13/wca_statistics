@@ -8,10 +8,10 @@ if [[ "$TRAVIS_EVENT_TYPE" != "cron" && "$changed_statistic_files" == "" && "$FO
 else
   # Set up database.
   mkdir build/
-  # bin/update_database.rb
+  bin/update_database.rb
   # When a cron job compute all statistics, otherwise just the updated and new ones.
   if [[ "$TRAVIS_EVENT_TYPE" == "cron" || "$FORCE_COMPUTE_ALL" == true ]]; then
-    bin/compute.js statistcs/*
+    bin/compute.js statistics/*
   else
     # Copy existing files from gh-pages to the build directory.
     git checkout gh-pages .
