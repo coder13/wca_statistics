@@ -3,14 +3,14 @@
 
 changed_statistic_files=`git diff --name-only $TRAVIS_COMMIT_RANGE | grep 'statistics/'`
 
-if [[ "$TRAVIS_EVENT_TYPE" != "cron" && "$changed_statistic_files" == "" ]]; then
+if [[ "$TRAVIS_EVENT_TYPE" != "cron" && "$changed_statistic_files" == "" && "$FORCE_COMPUTE_ALL" != true ]]; then
   echo "There is nothing to compute."
 else
   # Set up database.
   mkdir build/
-  bin/update_database.rb
+  # bin/update_database.rb
   # When a cron job compute all statistics, otherwise just the updated and new ones.
-  if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]]; then
+  if [[ "$TRAVIS_EVENT_TYPE" == "cron" || "$FORCE_COMPUTE_ALL" == true ]]; then
     bin/compute.js statistcs/*
   else
     # Copy existing files from gh-pages to the build directory.
