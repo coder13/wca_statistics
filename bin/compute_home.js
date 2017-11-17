@@ -9,7 +9,7 @@ fs.readdir(Path.resolve('statistics'), (err, files) => {
 		return `- [${statistic.title}](${name.replace(/\.js/, '')})`;
 	}).join('\n');
 
-	fs.writeFile(Path.join('build/README.md'), output, function (err) {
+	fs.writeFile(Path.join('build/README.md'), output, function (error) {
 		if (error) {throw error;}
 		console.log('Computed home page');
 	});
