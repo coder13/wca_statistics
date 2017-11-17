@@ -8,7 +8,7 @@ if [[ "$TRAVIS_EVENT_TYPE" != "cron" && "$changed_statistic_files" == "" ]]; the
 else
   # Set up database.
   bin/init.js
-  # bin/update_database.rb
+  bin/update_database.rb
   # When a cron job compute all statistics, otherwise just the updated and new ones.
   if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]]; then
     bin/compute.js statistcs/*

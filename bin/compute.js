@@ -15,7 +15,7 @@ paths.forEach(statPath => {
 	let fileName = Path.join('build', Path.basename(statPath).replace(/\.js/, '') + '.md');
 
 	statistic(function (output) {
-		fs.writeFile(fileName, output, function () {
+		fs.writeFile(fileName, output, function (err) {
 			console.log(`Computed ${statPath} and exported to ${fileName}`);
 		});
 	});
