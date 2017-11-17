@@ -7,7 +7,7 @@ changed_statistic_files=`git diff --name-only $TRAVIS_COMMIT_RANGE | grep 'stati
 #   echo "There is nothing to compute."
 # else
   # Set up database.
-  bin/init.js
+  mkdir build/
   bin/update_database.rb
   # When a cron job compute all statistics, otherwise just the updated and new ones.
   if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]]; then
