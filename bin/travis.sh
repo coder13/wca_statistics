@@ -8,7 +8,7 @@ changed_statistic_files=`git diff --name-only $TRAVIS_COMMIT_RANGE | grep 'stati
 # else
   # Set up database.
   mkdir build/
-  bin/update_database.rb
+  # bin/update_database.rb
   # When a cron job compute all statistics, otherwise just the updated and new ones.
   if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]]; then
     bin/compute.js statistcs/*
@@ -16,7 +16,7 @@ changed_statistic_files=`git diff --name-only $TRAVIS_COMMIT_RANGE | grep 'stati
     # Copy existing files from gh-pages to the build directory.
     git checkout gh-pages .
     files_to_copy= `git ls-tree --name-only gh-pages | grep '.md'`
-    if [[ "$files_to_copy" != "" ]] then
+    if [[ "$files_to_copy" != "" ]]; then
       mv $files_to_copy build
     fi
 
