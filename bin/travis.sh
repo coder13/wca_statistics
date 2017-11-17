@@ -1,11 +1,11 @@
 #!/bin/bash
 # Based on https://github.com/jonatanklosko/wca_statistics/blob/master/bin/travis.sh
 
-changed_statistic_files=`git diff --name-only $TRAVIS_COMMIT_RANGE | grep 'statistics/' | grep -v 'statistics/home.js'`
+changed_statistic_files=`git diff --name-only $TRAVIS_COMMIT_RANGE | grep 'statistics/'`
 
-# if [[ "$TRAVIS_EVENT_TYPE" != "cron" && "$changed_statistic_files" == "" ]]; then
-#   echo "There is nothing to compute."
-# else
+if [[ "$TRAVIS_EVENT_TYPE" != "cron" && "$changed_statistic_files" == "" ]]; then
+  echo "There is nothing to compute."
+else
   # Set up database.
   mkdir build/
   # bin/update_database.rb
@@ -27,5 +27,5 @@ changed_statistic_files=`git diff --name-only $TRAVIS_COMMIT_RANGE | grep 'stati
   fi
 
   # Update the home file in both cases.
-  #bin/compute_home.js
-# fi
+  bin/compute_home.js
+fi
