@@ -16,6 +16,7 @@ else
     # Copy existing files from gh-pages to the build directory.
     git checkout gh-pages .
     files_to_copy= $(git ls-tree --name-only gh-pages | grep '.md')
+    echo $files_to_copy
     if [[ "$files_to_copy" != "" ]]; then
       mv $files_to_copy build
     fi
