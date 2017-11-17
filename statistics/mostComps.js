@@ -2,22 +2,26 @@ const {query} = require('../core/database.js');
 const {normalTable} = require('../core/util.js');
 const md = require('../core/markdown');
 
-module.exports = function (cb) {
-	let title = 'Most Comps';
-	let description = `Most comps per person`;
+module.exports = {
+	title: 'Most Comps',
+	description: `Most comps per person`,
 
-	let results = query(`
+	query: `
 		SELECT personId, personName, COUNT(DISTINCT competitionId) comps FROM Results
 		GROUP BY personId, personName
 		ORDER BY comps DESC
 		LIMIT 15;
-	`, function (error, results, fields) {
-		if (error) throw erorr;;
-		
-		let table = normalTable(results, fields);
+	`,
 
-		let markdown = md.title(title) + md.description(description) + md.table(table);
+	run: function (cb) {
+		let results = query(this.query, (error, results, fields) => {
+			if (error) throw erorr;
+			
+			let table = normalTable(results, fields);
 
-		cb(markdown);
-	});
+			let markdown = md.title(this.title) + md.description(this.description) + md.table(table);
+
+			cb(markdown);
+		});
+	}
 };

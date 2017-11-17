@@ -10,11 +10,12 @@ if (process.argv.length < 2) {
 
 const paths = process.argv.slice(2);
 paths.forEach(statPath => {
+	console.log('Processing', statPath);
 	const statistic = require(Path.resolve(statPath));
 
 	let fileName = Path.join('build', Path.basename(statPath).replace(/\.js/, '') + '.md');
 
-	statistic(function (output) {
+	statistic.run(function (output) {
 		if (output === null) {
 			console.error('Output is null');
 		} else {
