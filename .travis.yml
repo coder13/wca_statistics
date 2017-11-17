@@ -13,5 +13,4 @@ deploy:
     condition: "-d build"
 install:
   - git fetch origin gh-pages:gh-pages
-  - bundle install --deployment
 script: bin/travis.sh
