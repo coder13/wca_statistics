@@ -4,7 +4,7 @@ const md = require('../core/markdown');
 
 module.exports = {
 	title: 'Most Comps',
-	description: `Most comps per person`,
+	description: 'Most comps per person',
 
 	query: `
 		SELECT personId, personName, COUNT(DISTINCT competitionId) comps FROM Results
@@ -15,8 +15,8 @@ module.exports = {
 
 	run: function (cb) {
 		let results = query(this.query, (error, results, fields) => {
-			if (error) throw erorr;
-			
+			if (error) {throw error;}
+
 			let table = normalTable(results, fields);
 
 			let markdown = md.title(this.title) + md.description(this.description) + md.table(table);

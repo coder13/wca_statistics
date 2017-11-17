@@ -5,5 +5,5 @@ module.exports = {
 
 	description: (description) => description + '\n\n',
 
-	table: (table, options) => mdTable(table, options) + '\n\n',
+	table: (table, options) => mdTable(table, options) + '\n\n'
 };

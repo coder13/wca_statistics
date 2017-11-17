@@ -10,7 +10,7 @@ fs.readdir(Path.resolve('statistics'), (err, files) => {
 	}).join('\n');
 
 	fs.writeFile(Path.join('build/README.md'), output, function (err) {
-		if (err) throw err;
-		console.log(`Computed home page`);
+		if (error) {throw error;}
+		console.log('Computed home page');
 	});
-})
+});

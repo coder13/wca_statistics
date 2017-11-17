@@ -4,12 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "validate": "npm ls"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "markdown-table": "^1.1.1",
-    "mysql": "^2.15.0"
-  }
+    "mysql": "^2.15.0",
+    "precommit-hook": "^3.0.0"
+  },
+  "pre-commit": [
+    "validate",
+    "lint"
+  ]
 }
