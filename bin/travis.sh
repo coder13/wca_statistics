@@ -15,7 +15,11 @@ changed_statistic_files=`git diff --name-only $TRAVIS_COMMIT_RANGE | grep 'stati
   else
     # Copy existing files from gh-pages to the build directory.
     git checkout gh-pages .
-    mv `git ls-tree --name-only gh-pages | grep '.md'` build
+    files_to_copy= `git ls-tree --name-only gh-pages | grep '.md'`
+    if [[ "$files_to_copy" != "" ]] then
+      mv $files_to_copy build
+    fi
+
     echo "$changed_statistic_files" | while read line; do
       echo "File has changed: $line"
       bin/compute.js $line
