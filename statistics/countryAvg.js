@@ -4,7 +4,6 @@ const {normalTable} = require('../core/util.js');
 const md = require('../core/markdown.js');
 const {events, eventNames, formatResult} = require('../core/wca.js');
 
-
 const percent = 5;
 const minPop = 100;
 
