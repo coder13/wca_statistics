@@ -13,7 +13,6 @@ paths.forEach(statPath => {
 	console.log('Processing', statPath);
 	const statistic = require(Path.resolve(statPath));
 
-
 	statistic.run(function (output, options) {
 		if (output === null) {
 			console.error('Output is null');
@@ -25,7 +24,7 @@ paths.forEach(statPath => {
 				fileName = Path.join('build', Path.basename(statPath).replace(/\.js/, '') + '.md');
 			}
 
-			fs.writeFile(fileName, output, function (err) {
+			fs.writeFile(fileName, output, function (error) {
 				if (error) {throw error;}
 
 				console.log(`Computed ${statPath} and exported to ${fileName}`);

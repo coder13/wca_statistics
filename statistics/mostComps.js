@@ -1,4 +1,4 @@
-const {query} = require('../core/database.js');
+const {query, endConnection} = require('../core/database.js');
 const {normalTable} = require('../core/util.js');
 const md = require('../core/markdown');
 
@@ -7,8 +7,8 @@ module.exports = {
 	description: 'Most comps per person',
 
 	query: `
-		SELECT personId, personName, COUNT(DISTINCT competitionId) comps FROM Results
-		GROUP BY personId, personName
+		SELECT personId, name, COUNT(DISTINCT competitionId) comps FROM Results JOIN Persons ON Results.personId = Persons.id
+		GROUP BY personId, name
 		ORDER BY comps DESC
 		LIMIT 15;
 	`,
@@ -21,6 +21,7 @@ module.exports = {
 
 			let markdown = md.title(this.title) + md.description(this.description) + md.table(table);
 
+			endConnection();
 			cb(markdown);
 		});
 	}

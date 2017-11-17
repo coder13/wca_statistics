@@ -16,7 +16,8 @@ module.exports.query = function (query, cb) {
 			throw error;
 		} else {
 			cb(null, results, fields);
-			connection.end();
 		}
 	});
 };
+
+module.exports.endConnection = () => connection.end();
