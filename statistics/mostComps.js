@@ -12,7 +12,7 @@ module.exports = function (cb) {
 		ORDER BY comps DESC
 		LIMIT 10;
 	`, function (error, results, fields) {
-		if (error) return '';
+		if (error) throw erorr;;
 		
 		let table = normalTable(results, fields);
 

@@ -12,8 +12,8 @@ module.exports.query = function (query, cb) {
 
 	connection.query(query, function (error, results, fields) {
 		if (error) {
-			cb(error);
 			connection.end();
+			throw error;
 		} else {
 			cb(null, results, fields);
 			connection.end();
