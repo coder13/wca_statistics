@@ -2,7 +2,7 @@ module.exports = {
 	mysql: {
 		host: 'localhost',
 		user: 'root',
-		password: 'wca',
+		password: '',
 		database: 'wca_statistics'
 	}
 };
