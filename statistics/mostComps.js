@@ -10,7 +10,7 @@ module.exports = function (cb) {
 		SELECT personId, personName, COUNT(DISTINCT competitionId) comps FROM Results
 		GROUP BY personId, personName
 		ORDER BY comps DESC
-		LIMIT 10;
+		LIMIT 15;
 	`, function (error, results, fields) {
 		if (error) throw erorr;;
 		
