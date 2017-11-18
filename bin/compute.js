@@ -3,6 +3,7 @@
 const Path = require('path');
 const fs = require('fs');
 const glob = require('glob');
+const Statistic = require('../core/statistic');
 
 if (process.argv.length < 2) {
 	console.error('Statistic not provided');
