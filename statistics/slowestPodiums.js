@@ -9,10 +9,21 @@ module.exports = {
 	description: '',
 
 	query: (eventId) => `
-		SELECT competitionId competitionId, Competitions.name competitionName, roundTypeId, ROUND(AVG(average)) average, GROUP_CONCAT(personId,'|',personName,'|',average) podium
-		FROM Results JOIN Competitions ON Results.competitionId = Competitions.id
+		SELECT
+			format.sort_by,
+			competitionId competitionId,
+			Competitions.name competitionName,
+			roundTypeId,
+			ROUND(AVG(average)) average,
+			ROUND(AVG(best)) single,
+			GROUP_CONCAT(personId,'|',personName,'|',average,'|',best) podium
+		FROM Results
+		JOIN Competitions ON Results.competitionId = Competitions.id
+		JOIN preferred_formats pf ON pf.event_id = eventId AND ranking = 1
+		JOIN Formats format ON format.id = pf.format_id
 		WHERE roundTypeId in ('c', 'f') AND pos <= 3 AND eventId='${eventId}'
-		GROUP BY competitionId,roundTypeId HAVING min(best)>0 AND COUNT(*)=3
+		GROUP BY competitionId,roundTypeId,sort_by
+		HAVING min(best)>0 AND COUNT(*)=3
 		ORDER BY SUM(average) DESC
 		LIMIT 10;
 	`,
@@ -31,16 +42,16 @@ module.exports = {
 				let lastValue;
 
 				let table = [['Place', 'Competition', 'Average', 'Podium']].concat(results.map(row => {
-					if (lastValue !== row.average) {
+					if (lastValue !== row[row.sort_by]) {
 						place++;
-						lastValue = row.average;
+						lastValue = row[row.sort_by];
 					}
 
 					let competitionName = nameWithLinkToCompetitionId(row.competitionName, row.competitionId + `/results/all#e${eventId}_${row.roundTypeId}`);
-					let average = formatResult(row.average, eventId, true);
+					let average = formatResult(row[row.sort_by], eventId, true);
 
 					let podium = row.podium.split(',').map(p => p.split('|')).map(podium =>
-						`${nameWithLinkToWcaId(podium[1], podium[0])} (${formatResult(podium[2])})`
+						`${nameWithLinkToWcaId(podium[1], podium[0])} (${formatResult(row.sort_by === 'average' ? podium[2] : podium[3], eventId, true)})`
 					).join(', ');
 
 					return [place, competitionName, average, podium];

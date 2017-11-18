@@ -70,8 +70,8 @@ const formatResult = module.exports.formatResult = function (result, eventId, av
 		return formatMbld(result, false);
 	} else if (eventId === '333mbo') {
 		return formatMbld(result, true);
-	} else if (eventId === '333fm' && !average) {
-		return result;
+	} else if (eventId === '333fm') {
+		return average ? fixed(result / 100, 2) : result;
 	} else {
 		return formatSolveTime(result);
 	}
