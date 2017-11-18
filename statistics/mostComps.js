@@ -1,7 +1,3 @@
-const {query, endConnection} = require('../core/database.js');
-const {normalTable} = require('../core/util.js');
-const md = require('../core/markdown');
-
 module.exports = {
 	title: 'Most Comps',
 	description: 'Most comps per person',

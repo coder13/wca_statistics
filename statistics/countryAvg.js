@@ -1,5 +1,5 @@
 const {forEach} = require('async-foreach');
-const {query, endConnection} = require('../core/database.js');
+const {query} = require('../core/database.js');
 const {normalTable} = require('../core/util.js');
 const md = require('../core/markdown.js');
 const {events, eventNames, formatResult} = require('../core/wca.js');
@@ -46,7 +46,6 @@ module.exports = {
 				done();
 			});
 		}, () => {
-			endConnection();
 			cb(md.title(this.title) + md.description(this.description) + markdown);
 		});
 	}

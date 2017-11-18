@@ -1,4 +1,4 @@
-const {query, endConnection} = require('../core/database.js');
+const {query} = require('../core/database.js');
 const {normalTable} = require('../core/util.js');
 const md = require('../core/markdown');
 
@@ -11,7 +11,6 @@ module.exports = function (stat) {
 
 			let markdown = md.title(stat.title) + md.description(stat.description) + md.table(table);
 
-			endConnection();
 			cb(markdown);
 		});
 	};
