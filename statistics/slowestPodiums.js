@@ -1,6 +1,6 @@
 const {forEach} = require('async-foreach');
 const {query, endConnection} = require('../core/database.js');
-const {normalTable, nameWithLink} = require('../core/util.js');
+const {normalTable, nameWithLinkToWcaId, nameWithLinkToCompetitionId} = require('../core/util.js');
 const md = require('../core/markdown');
 const {events, eventNames, formatResult} = require('../core/wca.js');
 
@@ -9,10 +9,10 @@ module.exports = {
 	description: '',
 
 	query: (eventId) => `
-		SELECT competitionId, ROUND(AVG(average)) Average, GROUP_CONCAT(personId,'|',personName,'|',average) Podium
-		FROM Results
+		SELECT competitionId competitionId, Competitions.name competitionName, roundTypeId, ROUND(AVG(average)) average, GROUP_CONCAT(personId,'|',personName,'|',average) podium
+		FROM Results JOIN Competitions ON Results.competitionId = Competitions.id
 		WHERE roundTypeId in ('c', 'f') AND pos <= 3 AND eventId='${eventId}'
-		GROUP BY competitionId HAVING min(best)>0 AND COUNT(*)=3
+		GROUP BY competitionId,roundTypeId HAVING min(best)>0 AND COUNT(*)=3
 		ORDER BY SUM(average) DESC
 		LIMIT 10;
 	`,
@@ -30,21 +30,21 @@ module.exports = {
 				let place = 0;
 				let lastValue;
 
-				let table = normalTable(results.map((row, index) => {
-					if (lastValue !== row.Average) {
+				let table = [['Place', 'Competition', 'Average', 'Podium']].concat(results.map(row => {
+					if (lastValue !== row.average) {
 						place++;
-						lastValue = row.Average;
+						lastValue = row.average;
 					}
 
-					row.Place = place;
+					let competitionName = nameWithLinkToCompetitionId(row.competitionName, row.competitionId + `/results/all#e${eventId}_${row.roundTypeId}`);
+					let average = formatResult(row.average, eventId, true);
 
-					row.Average = formatResult(row.Average, eventId, true);
-					row.Podium = row.Podium.split(',').map(p => p.split('|')).map(podium =>
-						`${nameWithLink(podium[1], podium[0])} (${formatResult(podium[2])})`
+					let podium = row.podium.split(',').map(p => p.split('|')).map(podium =>
+						`${nameWithLinkToWcaId(podium[1], podium[0])} (${formatResult(podium[2])})`
 					).join(', ');
 
-					return row;
-				}), [{name: 'Place'}].concat(fields));
+					return [place, competitionName, average, podium];
+				}));
 
 				markdown += md.subHeader(eventNames[eventId], 3) + (results.length === 0 ? 'Not enough people per country for this event\n\n' : md.table(table));
 				done();

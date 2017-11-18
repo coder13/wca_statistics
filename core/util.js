@@ -3,4 +3,5 @@ module.exports.normalTable = (results, fields) => {
 	return [f].concat(results.map(row => f.map(field => row[field])));
 };
 
-module.exports.nameWithLink = (name, wca_id) => `[${name}](https://www.worldcubeassociation.org/persons/${wca_id})`;
+module.exports.nameWithLinkToWcaId = (name, wca_id) => `[${name}](https://www.worldcubeassociation.org/persons/${wca_id})`;
+module.exports.nameWithLinkToCompetitionId = (name, wca_id) => `[${name}](https://www.worldcubeassociation.org/competitions/${wca_id})`;
