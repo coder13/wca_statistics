@@ -1,6 +1,8 @@
 #!/bin/bash
 # Based on https://github.com/jonatanklosko/wca_statistics/blob/master/bin/travis.sh
 
+ls -R
+
 changed_statistic_files=`git diff --name-only $TRAVIS_COMMIT_RANGE | grep 'statistics/'`
 
 if [[ "$TRAVIS_EVENT_TYPE" != "cron" && "$changed_statistic_files" == "" && "$FORCE_COMPUTE_ALL" != true ]]; then
@@ -14,12 +16,20 @@ else
     bin/compute.js statistics/*
   else
     # Copy existing files from gh-pages to the build directory.
+    
+    ls -R
+
     git checkout gh-pages .
+    
+    ls -R
+
     files_to_copy= $(git ls-tree --name-only gh-pages | grep '.md')
     echo $files_to_copy
     if [[ "$files_to_copy" != "" ]]; then
       mv $files_to_copy build
     fi
+
+    ls -R
 
     echo "$changed_statistic_files" | while read line; do
       echo "File has changed: $line"
