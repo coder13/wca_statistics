@@ -25,8 +25,9 @@ const writeToFile = function (output, statPath, cb, options) {
 	let fileName = '';
 	if (options && options.fileName) {
 		fileName = Path.join('build', options.fileName + '.md');
+		console.log(options.fileName);
 	} else {
-		fileName = Path.join('build', statPath.replace(/\.js/, '') + '.md');
+		fileName = Path.join('build', statPath.split('/')[1].replace(/\.js/, '') + '.md');
 	}
 
 	writeFile(fileName, output, function (error) {
