@@ -1,4 +1,5 @@
 module.exports.events = ['333', '222', '444', '555', '666', '777', '333bf', '333fm', '333oh', '333ft', 'minx', 'pyram', 'clock', 'skewb', '444bf', '555bf', '333mbf'];
+module.exports.timedEvents = ['333', '222', '444', '555', '666', '777', '333bf', '333oh', '333ft', 'minx', 'pyram', 'clock', 'skewb', '444bf', '555bf'];
 
 module.exports.eventNames = {
 	'333': '3x3',
