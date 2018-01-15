@@ -9,6 +9,8 @@ module Database
     championships
     Competitions
     competition_delegates
+    ConciseAverageResults
+    ConciseSingleResults
     Continents
     Countries
     Events
