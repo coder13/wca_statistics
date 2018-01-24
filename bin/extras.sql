@@ -1,5 +1,7 @@
 START TRANSACTION;
 
+CREATE INDEX personIdEventIdDate ON Results;
+
 DROP FUNCTION IF EXISTS resultId;
 CREATE FUNCTION resultId(competitionId varchar(32), personId varchar(10), eventId varchar(6), roundTypeId char(1))
 RETURNS varchar(255) DETERMINISTIC
