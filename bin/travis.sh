@@ -9,7 +9,7 @@ else
   # Set up database.
   mkdir build/
   bin/update_database.rb
-  mysql -u root -p wca --pasword="" < bin/extras.sql
+  mysql -u root -p wca_statistics --password="" < bin/extras.sql
   # When a cron job compute all statistics, otherwise just the updated and new ones.
   if [[ "$TRAVIS_EVENT_TYPE" == "cron" || "$FORCE_COMPUTE_ALL" == true ]]; then
     bin/compute.js statistics/*
