@@ -25,7 +25,7 @@ CREATE TABLE ResultDates AS (
 CREATE INDEX resultId ON ResultDates(resultId);
 CREATE INDEX eventRound ON ResultDates(eventId, roundTypeId);
 CREATE INDEX roundEventComp ON ResultDates(roundTypeId, eventId, competitionId);
-CREATE INDEX eventCountryDate ON ResultDates(eventId, personCountryId, date);
+CREATE INDEX eventCountryDate ON ResultDates(eventId, countryId, date);
 CREATE INDEX eventContinentDate ON ResultDates(eventId, personContinentId, date);
 CREATE INDEX eventDateAvg ON ResultDates(eventId, date, average);
 CREATE INDEX personIdEventIdDate ON ResultDates(personId, eventId, date);
