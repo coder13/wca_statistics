@@ -1,7 +1,5 @@
 START TRANSACTION;
 
-CREATE INDEX personIdEventIdDate ON Results;
-
 DROP FUNCTION IF EXISTS resultId;
 CREATE FUNCTION resultId(competitionId varchar(32), personId varchar(10), eventId varchar(6), roundTypeId char(1))
 RETURNS varchar(255) DETERMINISTIC
@@ -30,6 +28,7 @@ CREATE INDEX roundEventComp ON ResultDates(roundTypeId, eventId, competitionId);
 CREATE INDEX eventCountryDate ON ResultDates(eventId, personCountryId, date);
 CREATE INDEX eventContinentDate ON ResultDates(eventId, personContinentId, date);
 CREATE INDEX eventDateAvg ON ResultDates(eventId, date, average);
+CREATE INDEX personIdEventIdDate ON ResultDates(personId, eventId, date);
 
 DROP TABLE IF EXISTS W;
 DROP TABLE IF EXISTS C;
