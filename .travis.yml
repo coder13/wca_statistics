@@ -3,6 +3,7 @@ node_js:
   - 7.4.0
 before_install:
   - rvm install 2.2.2
+  - gem install bundler --no-rdoc --no-ri
 deploy:
   provider: pages
   skip_cleanup: true

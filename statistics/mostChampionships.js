@@ -10,23 +10,23 @@ module.exports = {
 	query: (region) => `
 		SELECT
 			personId,
-			Persons.name,
+			personName,
 			COUNT(competitionId) count,
-			GROUP_CONCAT(competitionId ORDER BY R.year, R.month, R.day) competitions
+			GROUP_CONCAT(competitionId ORDER BY year,month,day) competitions
 		FROM (
 			SELECT
 				DISTINCT competitionId,
 				personId,
+				personName,
 				year,
 				month,
 				day
 			FROM Results
-			JOIN Competitions C ON Results.competitionId = C.id
+			JOIN Competitions ON Results.competitionId = Competitions.id
 		) R
 		RIGHT JOIN championships ON R.competitionId = championships.competition_id
-		JOIN Persons ON R.personId=Persons.id
-		WHERE championship_type = '${region}' AND Persons.subid = 1
-		GROUP BY personId, Persons.name
+		WHERE championship_type = '${region}'
+		GROUP BY personId, personName
 		ORDER BY count DESC LIMIT 25;
 	`,
 
@@ -36,7 +36,6 @@ module.exports = {
 		let markdown = md.title(this.title);
 
 		forEach(this.regions, function (region) {
-			console.log('Running for region: ', region[0]);
 			let done = this.async();
 
 			markdown += md.subHeader(region[0], 3);
@@ -45,7 +44,7 @@ module.exports = {
 				if (error) {throw error;}
 
 				let table = [['Person', 'Championships', 'Competitions']].concat(results.map(row => {
-					let person = nameWithLinkToWcaId(row.name, row.personId);
+					let person = nameWithLinkToWcaId(row.personName, row.personId);
 					let comps = row.competitions.split(',').map(comp => nameWithLinkToCompetitionId(comp, comp)).join(', ');
 
 					return [person, row.count, comps];
