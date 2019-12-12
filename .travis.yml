@@ -16,3 +16,5 @@ install:
   - npm install
   - bundle install --deployment
 script: bin/travis.sh
+services:
+  - mysql
