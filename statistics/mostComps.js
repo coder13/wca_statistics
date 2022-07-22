@@ -3,9 +3,11 @@ module.exports = {
 	description: 'Most comps per person',
 
 	query: `
-		SELECT personId, name, COUNT(DISTINCT competitionId) comps FROM Results JOIN Persons ON Results.personId = Persons.id
+		SELECT personId, name, COUNT(DISTINCT competitionId) comps
+		FROM Results
+		JOIN Persons ON Results.personId = Persons.id AND Persons.subId = 1
 		GROUP BY personId, name
 		ORDER BY comps DESC
-		LIMIT 15;
+		LIMIT 100;
 	`
 };
